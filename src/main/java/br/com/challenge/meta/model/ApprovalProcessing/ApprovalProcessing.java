@@ -4,6 +4,8 @@ import br.com.challenge.meta.enumeration.AccessEnum;
 import br.com.challenge.meta.enumeration.StatusEnum;
 import br.com.challenge.meta.model.HangTag.HangTag;
 import br.com.challenge.meta.model.User.User;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -18,6 +20,8 @@ import java.util.UUID;
 @Entity
 @NoArgsConstructor
 @Table(name = "approval_processing")
+@AllArgsConstructor
+@Builder(builderMethodName = "newBuilder")
 public class ApprovalProcessing implements Serializable {
   private static final long serialVersionUID = 196266143388770099L;
 
@@ -43,10 +47,7 @@ public class ApprovalProcessing implements Serializable {
   private LocalDateTime dueDate;
 
   @ManyToMany
-  @JoinTable(
-      name = "hang_tag_approval_processing",
-      joinColumns = @JoinColumn(name = "approval_processing_id"),
-      inverseJoinColumns = @JoinColumn(name = "hang_tag_id"))
+  @JoinTable(name = "hang_tag_approval_processing", joinColumns = @JoinColumn(name = "approval_processing_id"), inverseJoinColumns = @JoinColumn(name = "hang_tag_id"))
   Set<HangTag> hangTags;
 
   @Size(max = 200)
