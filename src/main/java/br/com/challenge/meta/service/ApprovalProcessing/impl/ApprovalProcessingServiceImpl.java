@@ -5,6 +5,7 @@ import br.com.challenge.meta.filter.ApprovalProcessingFilter;
 import br.com.challenge.meta.model.ApprovalProcessing.ApprovalProcessing;
 import br.com.challenge.meta.repository.ApprovalProcessingRepository;
 import br.com.challenge.meta.service.ApprovalProcessing.ApprovalProcessingService;
+import br.com.challenge.meta.service.mapper.ApprovalProcessingMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,7 @@ import java.util.UUID;
 public class ApprovalProcessingServiceImpl implements ApprovalProcessingService {
 
     private final ApprovalProcessingRepository repository;
+    private final ApprovalProcessingMapper mapper;
 
     @Override
     public List<ApprovalProcessingDTO> findAll(ApprovalProcessingFilter filter, Pageable pageable) {
@@ -36,7 +38,8 @@ public class ApprovalProcessingServiceImpl implements ApprovalProcessingService 
 
     @Override
     public Boolean delete(UUID id) {
-        ApprovalProcessing approvalProcessingToDelete = this.repository.findById(id).orElseThrow(() -> new RuntimeException(""));
+        ApprovalProcessing approvalProcessingToDelete = this.repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Id invalid."));
 
         try {
             this.repository.delete(approvalProcessingToDelete);
